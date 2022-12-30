@@ -61,8 +61,14 @@ func main() {
 
 	engine.Insert(key)
 
-	engine.Start()
-	defer engine.Stop()
+	if err := engine.Start(); err != nil {
+		log.Fatalf(err.Error())
+	}
+	defer func() {
+		if err := engine.Stop(); err != nil {
+			log.Fatalf(err.Error())
+		}
+	}()
 
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)

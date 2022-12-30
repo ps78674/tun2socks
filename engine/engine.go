@@ -39,17 +39,21 @@ var (
 )
 
 // Start starts the default engine up.
-func Start() {
-	if err := start(); err != nil {
-		log.Fatalf("[ENGINE] failed to start: %v", err)
+func Start() error {
+	err := start()
+	if err != nil {
+		err = fmt.Errorf("[ENGINE] failed to start: %v", err)
 	}
+	return err
 }
 
 // Stop shuts the default engine down.
-func Stop() {
-	if err := stop(); err != nil {
-		log.Fatalf("[ENGINE] failed to stop: %v", err)
+func Stop() error {
+	err := stop()
+	if err != nil {
+		err = fmt.Errorf("[ENGINE] failed to stop: %v", err)
 	}
+	return err
 }
 
 // Insert loads *Key to the default engine.
